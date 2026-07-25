@@ -1,5 +1,0 @@
-// Module build script for 'gateway'
-apply plugin: 'java'
-
-// Add module-specific dependencies here if needed
-
