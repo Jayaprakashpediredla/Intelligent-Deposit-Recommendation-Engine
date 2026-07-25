@@ -1,0 +1,7 @@
+// Module build script for 'common'
+// Keep minimal; root backend/build.gradle configures common settings for subprojects
+apply plugin: 'java'
+
+// Add module-specific dependencies here if needed
+
+

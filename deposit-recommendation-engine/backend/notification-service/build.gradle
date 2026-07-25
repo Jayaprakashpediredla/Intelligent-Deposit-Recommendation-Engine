@@ -1,0 +1,5 @@
+// Module build script for 'notification-service'
+apply plugin: 'java'
+
+// Add module-specific dependencies here if needed
+

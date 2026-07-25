@@ -1,10 +1,11 @@
-rootProject.name = 'backend'
+rootProject.name = "intelligent-deposit-recommendation-engine"
 
-include 'common'
-include 'gateway'
-include 'customer-service'
-include 'transaction-service'
-include 'recommendation-service'
-include 'notification-service'
-include 'security'
-
+include(
+	"common",
+	"security",
+	"gateway",
+	"customer-service",
+	"transaction-service",
+	"recommendation-service",
+	"notification-service"
+)

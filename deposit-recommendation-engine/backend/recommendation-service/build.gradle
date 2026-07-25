@@ -1,0 +1,5 @@
+// Module build script for 'recommendation-service'
+apply plugin: 'java'
+
+// Add module-specific dependencies here if needed
+
