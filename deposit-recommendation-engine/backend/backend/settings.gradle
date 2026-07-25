@@ -1,0 +1,10 @@
+rootProject.name = 'backend'
+
+include 'common'
+include 'gateway'
+include 'customer-service'
+include 'transaction-service'
+include 'recommendation-service'
+include 'notification-service'
+include 'security'
+
