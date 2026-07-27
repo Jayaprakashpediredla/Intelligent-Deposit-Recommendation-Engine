@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_db_test
+
+server:
+  port: 8001
+
+logging:
+  level:
+    root: INFO
+
