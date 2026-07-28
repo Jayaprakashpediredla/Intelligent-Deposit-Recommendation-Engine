@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class ApiError {
 
     private String field;
+    private String code;
     private String message;
 }
