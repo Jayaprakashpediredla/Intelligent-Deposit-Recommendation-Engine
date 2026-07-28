@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-# Minimal gradlew stub — delegates to system 'gradle' command. Replace with real Gradle Wrapper if needed.
-if command -v gradle >/dev/null 2>&1; then
-  exec gradle "$@"
-else
-  echo "Gradle is not installed. Please install Gradle or add a proper Gradle wrapper to this project."
-  exit 1
-fi
-

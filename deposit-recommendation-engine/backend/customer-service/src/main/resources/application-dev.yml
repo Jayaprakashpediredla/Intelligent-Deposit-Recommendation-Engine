@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_db_dev
+
+server:
+  port: 8001
+
+logging:
+  level:
+    root: DEBUG
+    com.nexuswealth: DEBUG
+
