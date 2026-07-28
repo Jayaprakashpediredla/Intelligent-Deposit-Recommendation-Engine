@@ -6,6 +6,8 @@ description = "Shared common library"
 
 dependencies {
 
+    implementation("org.springframework:spring-web:6.2.7")
+
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
@@ -16,7 +18,15 @@ dependencies {
     // Jackson annotations for shared DTOs
     compileOnly("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.5.0")
+    testImplementation("org.assertj:assertj-core:3.27.3")
 
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
+
+    /*testImplementation(platform("org.junit:junit-bom:5.12.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")*/
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

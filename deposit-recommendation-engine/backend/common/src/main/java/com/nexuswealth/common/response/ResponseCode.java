@@ -1,23 +1,31 @@
 package com.nexuswealth.common.response;
 
+import org.springframework.http.HttpStatus;
+
 public enum ResponseCode {
 
-    SUCCESS,
+    SUCCESS(HttpStatus.OK),
 
-    CREATED,
+    CREATED(HttpStatus.CREATED),
 
-    UPDATED,
+    VALIDATION_FAILED(HttpStatus.BAD_REQUEST),
 
-    DELETED,
+    RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND),
 
-    VALIDATION_FAILED,
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED),
 
-    RESOURCE_NOT_FOUND,
+    FORBIDDEN(HttpStatus.FORBIDDEN),
 
-    UNAUTHORIZED,
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
 
-    FORBIDDEN,
+    private final HttpStatus httpStatus;
 
-    INTERNAL_SERVER_ERROR
+    ResponseCode(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
 
 }
