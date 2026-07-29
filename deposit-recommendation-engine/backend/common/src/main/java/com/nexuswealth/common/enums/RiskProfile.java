@@ -1,4 +1,11 @@
 package com.nexuswealth.common.enums;
 
-public class RiskProfile {
+public enum RiskProfile {
+
+    LOW,
+
+    MEDIUM,
+
+    HIGH
+
 }
