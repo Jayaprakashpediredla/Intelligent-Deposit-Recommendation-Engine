@@ -1,8 +1,7 @@
 package com.nexuswealth.customer.entity;
 
 import com.nexuswealth.common.entity.BaseEntity;
-import com.nexuswealth.common.enums.CustomerStatus;
-import com.nexuswealth.common.enums.RiskProfile;
+import com.nexuswealth.common.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,6 +47,21 @@ public class Customer extends BaseEntity {
 
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal annualIncome;
+
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal monthlyIncome;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EmploymentType employmentType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InvestmentTenure preferredInvestmentTenure;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CommunicationChannel preferredCommunicationChannel;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -17,6 +17,10 @@ CREATE TABLE customers (
     occupation VARCHAR(100) NOT NULL,
 
     annual_income NUMERIC(15,2) NOT NULL,
+    monthly_income NUMERIC(15,2) NOT NULL,
+    employment_type VARCHAR(30) NOT NULL,
+    preferred_investment_tenure VARCHAR(30) NOT NULL,
+    preferred_communication_channel VARCHAR(30) NOT NULL,
 
     risk_profile VARCHAR(20) NOT NULL,
 
