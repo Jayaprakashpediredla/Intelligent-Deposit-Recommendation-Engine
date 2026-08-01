@@ -25,6 +25,13 @@ dependencies {
 
     /*testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")*/
+
+    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
+
+    implementation("org.springframework.data:spring-data-commons:3.5.0")
+
+    implementation("org.springframework.data:spring-data-jpa:3.5.0")
+
 }
 
 tasks.test {
