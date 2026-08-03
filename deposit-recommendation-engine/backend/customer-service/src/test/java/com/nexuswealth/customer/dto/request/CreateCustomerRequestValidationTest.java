@@ -4,7 +4,6 @@ import com.nexuswealth.common.enums.CommunicationChannel;
 import com.nexuswealth.common.enums.EmploymentType;
 import com.nexuswealth.common.enums.InvestmentTenure;
 import com.nexuswealth.common.enums.RiskProfile;
-import com.nexuswealth.customer.dto.CreateCustomerRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
