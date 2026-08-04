@@ -1,6 +1,7 @@
 package com.nexuswealth.customer.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -21,6 +23,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             ResourceNotFoundException exception,
             HttpServletRequest request) {
+
+        log.warn(
+                "Resource not found. path={}, message={}",
+                request.getRequestURI(),
+                exception.getMessage()
+        );
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
@@ -42,6 +50,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleDuplicateResourceException(
             DuplicateResourceException exception,
             HttpServletRequest request) {
+
+        log.warn(
+                "Duplicate resource request. path={}",
+                request.getRequestURI()
+        );
+        log.warn(
+                "Duplicate resource request. path={}",
+                request.getRequestURI()
+        );
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
@@ -100,6 +117,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGenericException(
             Exception exception,
             HttpServletRequest request) {
+
+        log.error(
+                "Unexpected error occurred. path={}",
+                request.getRequestURI(),
+                exception
+        );
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
