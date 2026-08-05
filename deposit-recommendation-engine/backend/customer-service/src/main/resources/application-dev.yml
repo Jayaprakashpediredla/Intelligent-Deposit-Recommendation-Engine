@@ -12,5 +12,4 @@ server:
 logging:
   level:
     root: DEBUG
-    com.nexuswealth: DEBUG
-
+    com.nexuswealth.customer: DEBUG
