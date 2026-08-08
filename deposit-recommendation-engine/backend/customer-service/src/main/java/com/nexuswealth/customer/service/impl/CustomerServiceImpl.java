@@ -11,14 +11,19 @@ import com.nexuswealth.customer.exception.ResourceNotFoundException;
 import com.nexuswealth.customer.mapper.CustomerMapper;
 import com.nexuswealth.customer.repository.CustomerRepository;
 import com.nexuswealth.customer.service.CustomerService;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
@@ -28,6 +33,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse createCustomer(CreateCustomerRequest request) {
+
+        log.info("Creating customer with email: {}", maskEmail(request.getEmail()));
 
         validateDuplicateCustomer(request);
 
@@ -39,12 +46,43 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer savedCustomer = customerRepository.save(customer);
 
+        log.info("Customer created successfully. customerNumber={}", savedCustomer.getCustomerNumber());
+
         return customerMapper.toResponse(savedCustomer);
     }
+
+    private String maskEmail(@NotBlank(message = "Email is required") @Email(message = "Invalid email format") @Size(max = 100, message = "Email cannot exceed 100 characters") String email) {
+        int atIndex = email.indexOf('@');
+        if (atIndex == -1) {
+            return email;
+        }
+        String localPart = email.substring(0, atIndex);
+        String domainPart = email.substring(atIndex);
+        return localPart.charAt(0) + "****" + localPart.charAt(localPart.length() - 1) + domainPart;
+    }
+
+    /*private String maskEmail(String email) {
+
+        if (email == null || !email.contains("@")) {
+            return "***";
+        }
+
+        int atIndex = email.indexOf('@');
+
+        if (atIndex <= 1) {
+            return "***" + email.substring(atIndex);
+        }
+
+        return email.charAt(0)
+                + "***"
+                + email.substring(atIndex);
+    }*/
 
     @Override
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerById(UUID id) {
+
+        log.debug("Fetching customer by id: {}", id);
 
         Customer customer = findCustomerById(id);
 
@@ -54,6 +92,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerResponse getCustomerByNumber(String customerNumber) {
+
+        log.debug("Fetching customer by number: {}", customerNumber);
 
         Customer customer = customerRepository
                 .findByCustomerNumber(customerNumber)
@@ -71,6 +111,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = true)
     public List<CustomerSummaryResponse> getAllCustomers() {
 
+        log.debug("Fetching all customers");
+
         return customerRepository
                 .findAll()
                 .stream()
@@ -84,6 +126,8 @@ public class CustomerServiceImpl implements CustomerService {
             UpdateCustomerRequest request
     ) {
 
+        log.debug("Updating customer with id: {}", id);
+
         Customer existingCustomer = findCustomerById(id);
 
         validateUpdateDuplicates(existingCustomer, request);
@@ -93,15 +137,19 @@ public class CustomerServiceImpl implements CustomerService {
         Customer updatedCustomer =
                 customerRepository.save(existingCustomer);
 
+        log.info("Customer updated successfully. customerNumber={}", updatedCustomer.getCustomerNumber());
+
         return customerMapper.toResponse(updatedCustomer);
     }
 
     @Override
     public void deleteCustomer(UUID id) {
+        log.debug("Deleting customer with id: {}", id);
 
         Customer customer = findCustomerById(id);
 
         customerRepository.delete(customer);
+        log.info("Customer deleted successfully. customerNumber={}", customer.getCustomerNumber());
     }
 
     private Customer findCustomerById(UUID id) {
@@ -120,6 +168,8 @@ public class CustomerServiceImpl implements CustomerService {
     ) {
 
         if (customerRepository.existsByEmail(request.getEmail())) {
+
+            log.warn("Customer creation rejected because email already exists: {}", maskEmail(request.getEmail()));
             throw new DuplicateResourceException(
                     "Customer already exists with email: "
                             + request.getEmail()
@@ -128,6 +178,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         if (customerRepository.existsByMobileNumber(
                 request.getMobileNumber())) {
+
+            log.warn("Customer creation rejected because mobile number already exists");
 
             throw new DuplicateResourceException(
                     "Customer already exists with mobile number: "
