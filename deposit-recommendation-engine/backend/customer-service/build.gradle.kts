@@ -9,6 +9,9 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":security"))
 
+    // Explicit Spring Security dependency so security APIs are available at compile-time
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
