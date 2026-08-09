@@ -1,6 +1,8 @@
 package com.nexuswealth.customer.config;
 
 import com.nexuswealth.customer.security.CustomerUserDetailsService;
+import com.nexuswealth.security.exception.JwtAccessDeniedHandler;
+import com.nexuswealth.security.exception.JwtAuthenticationEntryPoint;
 import com.nexuswealth.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,10 @@ public class SecurityConfig {
     private final CustomerUserDetailsService userDetailsService;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    private final JwtAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public AuthenticationProvider authenticationProvider(
@@ -66,6 +72,15 @@ public class SecurityConfig {
 
                 .authenticationProvider(
                         authenticationProvider
+                )
+
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(
+                                authenticationEntryPoint
+                        )
+                        .accessDeniedHandler(
+                                accessDeniedHandler
+                        )
                 )
 
                 .authorizeHttpRequests(auth -> auth
