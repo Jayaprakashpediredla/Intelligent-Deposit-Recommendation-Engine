@@ -6,6 +6,7 @@ plugins {
 
 val jjwtVersion: String by project
 val lombokVersion: String by project
+val jacksonVersion: String by project
 
 dependencies {
 
@@ -16,6 +17,8 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
 
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
