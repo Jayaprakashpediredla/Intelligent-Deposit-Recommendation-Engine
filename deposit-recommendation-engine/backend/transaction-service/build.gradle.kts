@@ -1,28 +1,32 @@
-buildscript {
-    repositories { mavenCentral() }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${findProperty("springBootVersion") ?: "3.5.0"}")
-        classpath("io.spring.gradle:dependency-management-plugin:${findProperty("springDependencyManagementVersion") ?: "1.1.7"}")
-    }
+plugins {
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
-
-apply(plugin = "org.springframework.boot")
-apply(plugin = "io.spring.dependency-management")
 
 dependencies {
-    add("implementation", "org.springframework.boot:spring-boot-starter-web")
-    add("implementation", "org.springframework.boot:spring-boot-starter-data-jpa")
-    add("implementation", "org.postgresql:postgresql:${findProperty("postgresVersion") ?: "42.7.7"}")
 
-    add("implementation", project(":common"))
-    add("implementation", project(":security"))
+    implementation(project(":common"))
+    implementation(project(":security"))
 
-    add("developmentOnly", "org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    add("testImplementation", "org.springframework.boot:spring-boot-starter-test")
+    implementation("org.flywaydb:flyway-core")
+
+    runtimeOnly("org.postgresql:postgresql")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-    mainClass.set("com.nexuswealth.transaction.TransactionServiceApplication")
+tasks.bootJar {
+    mainClass.set(
+        "com.nexuswealth.transaction.TransactionServiceApplication"
+    )
 }
-
