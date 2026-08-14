@@ -14,6 +14,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     implementation("org.flywaydb:flyway-core")
+    implementation("org.flywaydb:flyway-database-postgresql")
 
     runtimeOnly("org.postgresql:postgresql")
 
@@ -23,6 +24,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("com.h2database:h2")
 }
 
 tasks.bootJar {
