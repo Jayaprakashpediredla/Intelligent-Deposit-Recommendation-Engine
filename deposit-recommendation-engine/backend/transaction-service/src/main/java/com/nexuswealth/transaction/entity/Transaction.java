@@ -100,7 +100,25 @@ public class Transaction {
 
     @PrePersist
     protected void onCreate() {
+
         LocalDateTime now = LocalDateTime.now();
+
+        if (transactionReference == null) {
+            transactionReference =
+                    "TXN-" + java.util.UUID.randomUUID()
+                            .toString()
+                            .replace("-", "")
+                            .substring(0, 12)
+                            .toUpperCase();
+        }
+
+        if (transactionDate == null) {
+            transactionDate = now;
+        }
+
+        if (status == null) {
+            status = TransactionStatus.PENDING;
+        }
 
         if (createdAt == null) {
             createdAt = now;
